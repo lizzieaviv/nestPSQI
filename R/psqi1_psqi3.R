@@ -198,18 +198,22 @@ finalize_time <- function(data, columns, output_var) {
       str_length(.x) == 4 ~ str_c("0", .x),
       TRUE ~ .x))) %>%
 
-    # Convert to time format (add seconds and convert to chron times), suppressing format warnings
-    mutate(across(all_of(columns), ~ suppressWarnings(.x %>%
-                                                        str_c(":00") %>%
-                                                        times()))) %>%
+    # Add seconds and convert to 'times' object
+    mutate(across(all_of(columns), ~ suppressWarnings(times(str_c(.x, ":00"))))) %>%
 
-    # Add dummy dates using chron, suppressing warnings for malformed entries
+    # Add dummy dates (supporting AM vs PM distinction)
     mutate(across(all_of(columns), ~ suppressWarnings(chron(
-      dates = ifelse(.x >= "00:00:00" & .x <= "12:00:00", "01/02/2000", "01/01/2000"),
-      times = .x)))) %>%
+      dates = ifelse(.x >= times("00:00:00") & .x <= times("12:00:00"),
+                     "01/02/2000", "01/01/2000"),
+      times = .x
+    )))) %>%
 
-    # Rewrite specified output variable as midpoint or start time
+    # Compute final value (midpoint or single time)
     mutate(!!sym(output_var) := suppressWarnings(times(
-      (ifelse(is.na(helper_end), as.numeric(times(helper_start)),
-              (as.numeric(times(helper_start)) + as.numeric(times(helper_end))) / 2)) %% 1)))
+      ifelse(
+        is.na(helper_end),
+        as.numeric(times(helper_start)),
+        (as.numeric(times(helper_start)) + as.numeric(times(helper_end))) / 2
+      ) %% 1
+    )))
 }
