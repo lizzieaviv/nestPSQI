@@ -2,7 +2,7 @@
 % Please edit documentation in R/psqi1_psqi3.R
 \name{convert_to_military_morning}
 \alias{convert_to_military_morning}
-\title{Convert morning-time text entries to military time format}
+\title{Convert morning-time text entries to military time format for PSQI3}
 \usage{
 convert_to_military_morning(data, columns)
 }

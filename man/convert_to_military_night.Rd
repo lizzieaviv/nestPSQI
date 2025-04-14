@@ -2,7 +2,7 @@
 % Please edit documentation in R/psqi1_psqi3.R
 \name{convert_to_military_night}
 \alias{convert_to_military_night}
-\title{Convert night-time text entries to military time format}
+\title{Convert night-time text entries to military time format for PSQI1}
 \usage{
 convert_to_military_night(data, columns)
 }

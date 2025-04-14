@@ -10,7 +10,7 @@
 # ====================================================================
 
 # ---- clean_time_range --------------------------------------------------------
-#' Clean and standardize a free-text time range column
+#' Clean and standardize a free-text time range column for PSQI1/PSQI3
 #'
 #' Cleans inconsistent or messy time strings into a consistent format like "9:00 pm - 11:00 pm".
 #'
@@ -46,7 +46,7 @@ clean_time_range <- function(data, time_col) {
 }
 
 # ---- extract_time_range --------------------------------------------------------
-#' Extract start and end times from a cleaned time range column
+#' Extract start and end times from a cleaned time range column for PSQI1/PSQI3
 #'
 #' After `clean_time_range()` standardizes the text, this function extracts the start and end times
 #' (before and after the " - ") into two new columns: `helper_start` and `helper_end`.
@@ -65,7 +65,7 @@ extract_time_range <- function(data, time_col) {
 }
 
 # ---- convert_to_military_night --------------------------------------------------------
-#' Convert night-time text entries to military time format
+#' Convert night-time text entries to military time format for PSQI1
 #'
 #' Cleans and standardizes text entries (e.g., bedtimes) into military time format (e.g., "9pm" → "21:00").
 #' This version is intended for PSQI Item 1 (nighttime sleep onset).
@@ -130,7 +130,7 @@ convert_to_military_night <- function(data, columns) {
 }
 
 # ---- convert_to_military_morning --------------------------------------------------------
-#' Convert morning-time text entries to military time format
+#' Convert morning-time text entries to military time format for PSQI3
 #'
 #' Cleans and standardizes text entries (e.g., wake times) into military time format (e.g., "6:30am" → "06:30").
 #' This version is intended for PSQI Item 3 (morning wake time).
@@ -180,7 +180,7 @@ convert_to_military_morning <- function(data, columns) {
 }
 
 # ---- finalize_time --------------------------------------------------------
-#' Calculate a single PSQI time value based on start and end times
+#' Calculate a single PSQI time value based on start and end times for PSQI1/PSQI3
 #'
 #' Combines time columns into a single value for PSQI scoring. If both start and end times are available,
 #' computes their midpoint. If only start time is available, uses that. Adds dummy dates to support crossing midnight.

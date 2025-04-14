@@ -2,7 +2,7 @@
 % Please edit documentation in R/psqi1_psqi3.R
 \name{extract_time_range}
 \alias{extract_time_range}
-\title{Extract start and end times from a cleaned time range column}
+\title{Extract start and end times from a cleaned time range column for PSQI1/PSQI3}
 \usage{
 extract_time_range(data, time_col)
 }

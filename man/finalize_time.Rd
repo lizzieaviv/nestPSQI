@@ -2,7 +2,7 @@
 % Please edit documentation in R/psqi1_psqi3.R
 \name{finalize_time}
 \alias{finalize_time}
-\title{Calculate a single PSQI time value based on start and end times}
+\title{Calculate a single PSQI time value based on start and end times for PSQI1/PSQI3}
 \usage{
 finalize_time(data, columns, output_var)
 }

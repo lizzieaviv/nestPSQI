@@ -2,7 +2,7 @@
 % Please edit documentation in R/psqi1_psqi3.R
 \name{clean_time_range}
 \alias{clean_time_range}
-\title{Clean and standardize a free-text time range column}
+\title{Clean and standardize a free-text time range column for PSQI1/PSQI3}
 \usage{
 clean_time_range(data, time_col)
 }
