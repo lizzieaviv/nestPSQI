@@ -198,19 +198,18 @@ finalize_time <- function(data, columns, output_var) {
       str_length(.x) == 4 ~ str_c("0", .x),
       TRUE ~ .x))) %>%
 
-    # Convert to time format
-    mutate(across(all_of(columns), ~ .x %>%
-                    str_c(":00") %>%  # Add seconds
-                    times())) %>%  # Convert to time format
+    # Convert to time format (add seconds and convert to chron times), suppressing format warnings
+    mutate(across(all_of(columns), ~ suppressWarnings(.x %>%
+                                                        str_c(":00") %>%
+                                                        times()))) %>%
 
-    # Add dummy dates
-    mutate(across(all_of(columns), ~ chron(
+    # Add dummy dates using chron, suppressing warnings for malformed entries
+    mutate(across(all_of(columns), ~ suppressWarnings(chron(
       dates = ifelse(.x >= "00:00:00" & .x <= "12:00:00", "01/02/2000", "01/01/2000"),
-      times = .x))) %>%
+      times = .x)))) %>%
 
     # Rewrite specified output variable as midpoint or start time
-    mutate(!!sym(output_var) := times(
-      (ifelse(is.na(helper_end), as.numeric(times(helper_start)),  # If helper_end is NA, keep helper_start
-              (as.numeric(times(helper_start)) + as.numeric(times(helper_end))) / 2  # Otherwise, compute midpoint
-      )) %% 1))  # Extract only the time portion (drop date)
+    mutate(!!sym(output_var) := suppressWarnings(times(
+      (ifelse(is.na(helper_end), as.numeric(times(helper_start)),
+              (as.numeric(times(helper_start)) + as.numeric(times(helper_end))) / 2)) %% 1)))
 }
